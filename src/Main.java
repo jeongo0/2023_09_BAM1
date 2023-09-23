@@ -39,12 +39,13 @@ public class Main {
 
 			} else if (command.equals("article write")) {
 				int id = lastArticleId + 1;
+				String regDate = Util.getNow();
 				System.out.printf("제목 : ");
 				String title = sc.nextLine();
 				System.out.printf("내용 : ");
 				String body = sc.nextLine();
 
-				Article article = new Article(id, title, body);
+				Article article = new Article(id, regDate, title, body);
 				articles.add(article);
 
 				System.out.println("입력된 제목 : " + title);
@@ -87,17 +88,26 @@ public class Main {
 		}
 
 		System.out.println(" == 프로그램 종료 ==");
+		
 		sc.close();
 	}
 }
 
 class Article {
 	int id;
+	String regDate;
 	String title;
 	String body;
 
 	Article(int id, String title, String body) { // <- 생성자(매개변수)
 		this.id = id;
+		this.title = title;
+		this.body = body;
+	}
+
+	public Article(int id, String regDate, String title, String body) {
+		this.id = id;
+		this.regDate = regDate;
 		this.title = title;
 		this.body = body;
 	}
