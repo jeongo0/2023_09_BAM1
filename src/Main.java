@@ -10,7 +10,7 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 
 		int lastArticleId = 0;
-		
+
 		List<Article> articles = new ArrayList<Article>();
 
 		while (true) {
@@ -29,10 +29,9 @@ public class Main {
 			if (command.equals("article list")) {
 				if (articles.size() == 0) {
 					System.out.println("게시글이 없습니다");
-				}
-				else {
+				} else {
 					System.out.println("번호    /    제목    ");
-					for(int i = articles.size() - 1; i >= 0; i--) {
+					for (int i = articles.size() - 1; i >= 0; i--) {
 						Article article = articles.get(i);
 						System.out.printf(" %d   /   %s   \n", article.id, article.title);
 					}
@@ -47,24 +46,40 @@ public class Main {
 
 				Article article = new Article(id, title, body);
 				articles.add(article);
-				
+
 				System.out.println("입력된 제목 : " + title);
 				System.out.println("입력된 내용 : " + body);
 
 				System.out.printf("%d번글이 생성되었습니다.\n", id);
 				lastArticleId++;
-				
+
 			} else if (command.startsWith("article detail")) {
-				String[] commandDiv = command.split(" "); 
-						
+				String[] commandDiv = command.split(" ");
+
 				System.out.println("commandDiv[0]");
 				System.out.println("commandDiv[1]");
 				System.out.println("commandDiv[2]");
-				
+
 				int id = Integer.parseInt(commandDiv[2]);
 
-				System.out.printf("%d번 게시물은 없어\n", id);
-				
+				boolean found = false;
+
+				for (int i = 0; i < articles.size(); i++) {
+					Article article = articles.get(i);
+					if (article.id == id) {
+						found = true;
+						System.out.println("번호 : " + article.id);
+						System.out.println("날짜 : " + article.id);
+						System.out.println("제목 : " + article.id);
+						System.out.println("내용 : " + article.id);
+						break;
+					}
+				}
+
+				if (found == false) {
+					System.out.printf("%d번 게시물은 없어\n", id);
+				}
+
 			} else {
 				System.out.println("존재하지 않는 명령어입니다");
 				continue;
