@@ -7,8 +7,9 @@ public class Main {
 
 		System.out.println("== 프로그램 시작 ==");
 
-		Scanner sc = new Scanner(System.in);
 
+		
+		Scanner sc = new Scanner(System.in);
 		int lastArticleId = 0;
 
 		List<Article> articles = new ArrayList<Article>();
@@ -30,10 +31,10 @@ public class Main {
 				if (articles.size() == 0) {
 					System.out.println("게시글이 없습니다");
 				} else {
-					System.out.println("번호    /    제목    ");
+					System.out.println("번호    /    제목    /    조회    ");
 					for (int i = articles.size() - 1; i >= 0; i--) {
 						Article article = articles.get(i);
-						System.out.printf(" %d   /   %s   \n", article.id, article.title);
+						System.out.printf(" %d   /   %s   /   %d   \n", article.id, article.title, article.hit);
 					}
 				}
 
@@ -57,24 +58,29 @@ public class Main {
 
 				int id = Integer.parseInt(commandDiv[2]);
 
-				boolean found = false; // 못찾았을 때의 가정을 나타낸다.
+				Article foundArticle = null; // 못찾았을 때의 가정을 나타낸다.
 
 				for (int i = 0; i < articles.size(); i++) {
 					Article article = articles.get(i);
 					if (article.id == id) {
-						found = true;
-						System.out.println("번호 : " + article.id);
-						System.out.println("작성날짜 : " + article.regDate);
-						System.out.println("수정날짜 : " + article.updateDate);
-						System.out.println("제목 : " + article.id);
-						System.out.println("내용 : " + article.id);
+						foundArticle = article;
 						break;
 					}
 				}
 
-				if (found == false) {
+				if (foundArticle == null) {
 					System.out.printf("%d번 게시물은 없어\n", id);
+					continue;
 				}
+				
+				foundArticle.hit++;
+				
+				System.out.println("번호 : " + foundArticle.id);
+				System.out.println("작성날짜 : " + foundArticle.regDate);
+				System.out.println("수정날짜 : " + foundArticle.updateDate);
+				System.out.println("제목 : " + foundArticle.title);
+				System.out.println("내용 : " + foundArticle.body);
+				System.out.println("조회수 : " + foundArticle.hit);
 
 			}  else if (command.startsWith("article modify")) {
 
@@ -150,11 +156,7 @@ class Article {
 	String title;
 	String body;
 
-	Article(int id, String title, String body) { // <- 생성자(매개변수)
-		this.id = id;
-		this.title = title;
-		this.body = body;
-	}
+	int hit;
 
 	public Article(int id, String regDate, String updateDate, String title, String body) {
 		this.id = id;
@@ -162,5 +164,6 @@ class Article {
 		this.updateDate = updateDate;
 		this.title = title;
 		this.body = body;
+		this.hit = 0;
 	}
 }
