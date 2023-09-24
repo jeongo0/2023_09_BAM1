@@ -3,16 +3,17 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+	static List<Article> articles = new ArrayList<Article>();
+
 	public static void main(String[] args) {
-
+		
 		System.out.println("== 프로그램 시작 ==");
-
-
+		
+		makeTestData();
 		
 		Scanner sc = new Scanner(System.in);
 		int lastArticleId = 0;
 
-		List<Article> articles = new ArrayList<Article>();
 
 		while (true) {
 			System.out.printf("명령어)");
@@ -146,6 +147,12 @@ public class Main {
 		System.out.println(" == 프로그램 종료 ==");
 
 		sc.close();
+	}
+	private static void makeTestData() {
+		System.out.println("테스트를 위한 데이터 3개 생성 완료 ");
+		articles.add(new Article(1, Util.getNow(), Util.getNow(), "제목1", "내용1"));
+		articles.add(new Article(1, Util.getNow(), Util.getNow(), "제목2", "내용2"));
+		articles.add(new Article(1, Util.getNow(), Util.getNow(), "제목3", "내용3"));
 	}
 }
 
