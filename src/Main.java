@@ -48,18 +48,12 @@ public class Main {
 				Article article = new Article(id, regDate, title, body);
 				articles.add(article);
 
-				System.out.println("입력된 제목 : " + title);
-				System.out.println("입력된 내용 : " + body);
-
 				System.out.printf("%d번글이 생성되었습니다.\n", id);
 				lastArticleId++;
 
 			} else if (command.startsWith("article detail")) {
-				String[] commandDiv = command.split(" ");
 
-				System.out.println("commandDiv[0]");
-				System.out.println("commandDiv[1]");
-				System.out.println("commandDiv[2]");
+				String[] commandDiv = command.split(" ");
 
 				int id = Integer.parseInt(commandDiv[2]);
 
@@ -81,29 +75,28 @@ public class Main {
 					System.out.printf("%d번 게시물은 없어\n", id);
 				}
 
-				else if (command.startsWith("article delete")) {
-					String[] commandDiv = command.split(" ");
+			} else if (command.startsWith("article delete")) {
 
-					int id = Integer.parseInt(commandDiv[2]);
+				String[] commandDiv = command.split(" ");
 
-					int foundIndex = -1; // 없다고 가정
+				int id = Integer.parseInt(commandDiv[2]);
 
-					for (int i = 0; i < articles.size(); i++) {
-						Article article = articles.get(i);
-						if (article.id == id) {
-							foundIndex = i;
-							break;
-						}
+				int foundIndex = -1; // 없다고 가정
+
+				for (int i = 0; i < articles.size(); i++) {
+					Article article = articles.get(i);
+					if (article.id == id) {
+						foundIndex = i;
+						break;
 					}
-					if (foundIndex == -1) {
-						System.out.printf("%d번 게시물은 없어\n", id);
-						continue;
-					}
-
-					articles.remove(foundIndex);
-					System.out.println(id + "번 글을 삭제했어");
-
 				}
+				if (foundIndex == -1) {
+					System.out.printf("%d번 게시물은 없어\n", id);
+					continue;
+				}
+
+				articles.remove(foundIndex);
+				System.out.println(id + "번 글을 삭제했어");
 
 			} else {
 				System.out.println("존재하지 않는 명령어입니다");
