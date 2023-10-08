@@ -35,7 +35,10 @@ public class Main {
 				int id = lastMemberId + 1;
 				String regDate = Util.getNow();
 				String loginId = null;
-
+				String loginPw = null;
+				String loginPwConfirm = null;
+				String name = null;
+				
 				while (true) {
 					System.out.printf("로그인 아이디 : ");
 					loginId = sc.nextLine();
@@ -52,12 +55,44 @@ public class Main {
 					break;
 				}
 				
-				System.out.printf("로그인 비밀번호 : ");
-				String loginPw = sc.nextLine();
-				System.out.printf("로그인 비밀번호 확인: ");
-				String loginPwConfirm = sc.nextLine();
-				System.out.printf("이름 : ");
-				String name = sc.nextLine();
+				while (true) {
+					System.out.printf("로그인 비밀번호 : ");
+					loginPw = sc.nextLine();
+					
+					if (loginPw.length() == 0) {
+						System.out.println("비밀번호 입력해라");
+						continue;
+					}
+					
+					while (true) {
+						System.out.printf("로그인 비밀번호 확인: ");
+						loginPwConfirm = sc.nextLine();
+						
+						if (loginPwConfirm.length() == 0) {
+							System.out.println("비밀번호 입력해라");
+							continue;
+						}
+						break;						
+					}
+					
+					if (loginPw.equals(loginPwConfirm) == false) {
+						System.out.println("비밀번호 확인해");
+						continue;
+					}
+					break;
+					
+				}
+				
+				while(true) {
+					System.out.printf("이름 : ");
+					name = sc.nextLine();
+					
+					if (name.length() == 0) {
+						System.out.println("이름 입력해라");
+						continue;
+					}
+					break;
+				}
 
 				Member member = new Member(id, regDate, regDate, loginId, loginPw, name);
 				members.add(member);
@@ -194,7 +229,7 @@ public class Main {
 		if (index == -1) {
 			return true;
 		}
-		
+
 		return false;
 	}
 
