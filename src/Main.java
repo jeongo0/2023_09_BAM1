@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Main {
 	static List<Article> articles = new ArrayList<Article>();
+	static List<Member> members = new ArrayList<Member>();
 
 	public static void main(String[] args) {
 
@@ -12,8 +13,9 @@ public class Main {
 		makeTestData();
 
 		Scanner sc = new Scanner(System.in);
-		int lastArticleId = 3;
-
+		int lastArticleId = 5;
+		int lastMemberId = 0;
+		
 		while (true) {
 			System.out.printf("명령어)");
 			String command = sc.nextLine().trim();
@@ -26,8 +28,26 @@ public class Main {
 			if (command.equals("exit")) {
 				break;
 			}
+			
+			else if (command.equals("member join")) {
+				int id = lastMemberId + 1;
+				String regDate = Util.getNow();
+				System.out.printf("로그인 아이디 : ");
+				String loginId = sc.nextLine();
+				System.out.printf("로그인 비밀번호 : ");
+				String loginPw = sc.nextLine();
+				System.out.printf("이름 : ");
+				String name = sc.nextLine();
 
-			if (command.startsWith("article list")) {
+				Member member = new Member(id, regDate, regDate, loginId, loginPw, name);
+				members.add(member);
+
+				System.out.printf("%d번글이 생성되었습니다.\n", id);
+				lastMemberId++;
+
+			}
+
+			else if (command.startsWith("article list")) {
 				if (articles.size() == 0) {
 					System.out.println("게시글이 없습니다");
 					continue;
@@ -202,5 +222,23 @@ class Article {
 		this.title = title;
 		this.body = body;
 		this.hit = hit;
+	}
+}
+
+class Member {
+	int id;
+	String regDate;
+	String updateDate;
+	String loginId;
+	String loginPw;
+	String name;
+
+	Member(int id, String regDate, String updateDate, String loginId, String loginPw, String name) {
+		this.id = id;
+		this.regDate = regDate;
+		this.updateDate = updateDate;
+		this.loginId = loginId;
+		this.loginPw = loginPw;
+		this.name = name;
 	}
 }
