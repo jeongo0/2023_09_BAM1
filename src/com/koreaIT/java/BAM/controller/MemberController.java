@@ -106,7 +106,6 @@ public class MemberController {
 				return i;
 			}
 		}
-
 		return -1;
 	}
 	
