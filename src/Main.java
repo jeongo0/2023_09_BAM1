@@ -27,18 +27,42 @@ public class Main {
 				break;
 			}
 
-			if (command.equals("article list")) {
+			if (command.startsWith("article list")) {
 				if (articles.size() == 0) {
 					System.out.println("게시글이 없습니다");
-				} else {
-					System.out.println("번호    /    제목    /    조회    ");
-					for (int i = articles.size() - 1; i >= 0; i--) {
-						Article article = articles.get(i);
-						System.out.printf(" %d   /   %s   /   %d   \n", article.id, article.title, article.hit);
+					continue;
+				}
+				String searchKeyword = command.substring("article list".length()).trim();
+
+				System.out.println("searchKeyword : " + searchKeyword);
+
+				List<Article> forPrintArticles = articles;
+
+				if (searchKeyword.length() > 0) {
+					forPrintArticles = new ArrayList<Article>();
+
+					for (Article article : articles) {
+						if (article.title.contains("searchKeyword")) {
+							forPrintArticles.add(article);
+						}
 					}
+					if (forPrintArticles.size() == 0) {
+						System.out.println("검색 결과 없어");
+						continue;
+					}
+				} else {
+					System.out.println("검색어가 없어");
+
+				}
+
+				System.out.println("번호    /    제목    /    조회    ");
+				for (int i = forPrintArticles.size() - 1; i >= 0; i--) {
+					Article article = articles.get(i);
+					System.out.printf(" %4d   /   %5s   /   %4d   \n", article.id, article.title, article.hit);
 				}
 
 			} else if (command.equals("article write")) {
+
 				int id = lastArticleId + 1;
 				String regDate = Util.getNow();
 				System.out.printf("제목 : ");
@@ -81,7 +105,7 @@ public class Main {
 				int id = Integer.parseInt(commandDiv[2]);
 
 				Article foundArticle = gatArticleById(id);
-				
+
 				if (foundArticle == null) {
 					System.out.printf("%d번 게시물은 없어\n", id);
 					continue;
@@ -103,14 +127,14 @@ public class Main {
 
 				int id = Integer.parseInt(commandDiv[2]);
 
-				int foundIndex = getArticleIndexById(id);          // (4) 0이상의 정수나 -1이 남는다.
+				int foundIndex = getArticleIndexById(id); // (4) 0이상의 정수나 -1이 남는다.
 
-				if (foundIndex == -1) {								// (5)  -1이면
-					System.out.printf("%d번 게시물은 없어\n", id);  // (6)  여기에 들어간다.
-					continue;                                       // (7) -1이 아니면 아래로 계속 내려갈 것이다.          
+				if (foundIndex == -1) { // (5) -1이면
+					System.out.printf("%d번 게시물은 없어\n", id); // (6) 여기에 들어간다.
+					continue; // (7) -1이 아니면 아래로 계속 내려갈 것이다.
 				}
 
-				articles.remove(foundIndex);   						// (8) 0이상의 정수는 foundindex에 들어가서 덮어 씌운다.
+				articles.remove(foundIndex); // (8) 0이상의 정수는 foundindex에 들어가서 덮어 씌운다.
 				System.out.println(id + "번 글을 삭제했어");
 
 			} else {
@@ -122,18 +146,19 @@ public class Main {
 		System.out.println(" == 프로그램 종료 ==");
 
 		sc.close();
+
 	}
 
 	private static int getArticleIndexById(int id) {
-		
+
 		for (int i = 0; i < articles.size(); i++) {
 			Article article = articles.get(i);
 			if (article.id == id) {
-				return i;                   // (2) 실제의 i값을 남기던가,  -1을 남기던가 둘 중 하나여야 한다. 
+				return i; // (2) 실제의 i값을 남기던가, -1을 남기던가 둘 중 하나여야 한다.
 			}
 		}
-		
-		return -1;    // (1) 없다의 경우를 0이아닌 -1로 하기로함.
+
+		return -1; // (1) 없다의 경우를 0이아닌 -1로 하기로함.
 	}
 
 	private static Article gatArticleById(int id) {
@@ -150,9 +175,11 @@ public class Main {
 
 	private static void makeTestData() {
 		System.out.println("테스트를 위한 데이터 3개 생성 완료 ");
-		articles.add(new Article(1, Util.getNow(), Util.getNow(), "제목1", "내용1"));
-		articles.add(new Article(1, Util.getNow(), Util.getNow(), "제목2", "내용2"));
-		articles.add(new Article(1, Util.getNow(), Util.getNow(), "제목3", "내용3"));
+		articles.add(new Article(1, Util.getNow(), Util.getNow(), "제목1", "내용1", 11));
+		articles.add(new Article(2, Util.getNow(), Util.getNow(), "제목2", "내용2", 22));
+		articles.add(new Article(3, Util.getNow(), Util.getNow(), "제목3", "내용3", 33));
+		articles.add(new Article(4, Util.getNow(), Util.getNow(), "제목4", "내용4", 44));
+		articles.add(new Article(5, Util.getNow(), Util.getNow(), "제목5", "내용5", 55));
 	}
 }
 
