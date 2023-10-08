@@ -13,11 +13,13 @@ public class Main {
 		makeTestData();
 
 		Scanner sc = new Scanner(System.in);
+
 		int lastArticleId = 5;
 		int lastMemberId = 0;
-		
+
 		while (true) {
-			System.out.printf("명령어)");
+
+			System.out.printf("명령어) ");
 			String command = sc.nextLine().trim();
 
 			if (command.length() == 0) {
@@ -28,14 +30,32 @@ public class Main {
 			if (command.equals("exit")) {
 				break;
 			}
-			
+
 			else if (command.equals("member join")) {
 				int id = lastMemberId + 1;
 				String regDate = Util.getNow();
-				System.out.printf("로그인 아이디 : ");
-				String loginId = sc.nextLine();
+				String loginId = null;
+
+				while (true) {
+					System.out.printf("로그인 아이디 : ");
+					loginId = sc.nextLine();
+
+					if (loginId.length() == 0) {
+						System.out.println("아이디 입력해라");
+						continue;
+
+					} else if (isjoinableLoginId(loginId) == false) {
+						System.out.println("이미 쓰는 아이디야");
+						continue;
+					}
+
+					break;
+				}
+				
 				System.out.printf("로그인 비밀번호 : ");
 				String loginPw = sc.nextLine();
+				System.out.printf("로그인 비밀번호 확인: ");
+				String loginPwConfirm = sc.nextLine();
 				System.out.printf("이름 : ");
 				String name = sc.nextLine();
 
@@ -44,7 +64,6 @@ public class Main {
 
 				System.out.printf("%d번글이 생성되었습니다.\n", id);
 				lastMemberId++;
-
 			}
 
 			else if (command.startsWith("article list")) {
@@ -52,6 +71,7 @@ public class Main {
 					System.out.println("게시글이 없습니다");
 					continue;
 				}
+				
 				String searchKeyword = command.substring("article list".length()).trim();
 
 				System.out.println("searchKeyword : " + searchKeyword);
@@ -82,7 +102,6 @@ public class Main {
 				}
 
 			} else if (command.equals("article write")) {
-
 				int id = lastArticleId + 1;
 				String regDate = Util.getNow();
 				System.out.printf("제목 : ");
@@ -167,6 +186,28 @@ public class Main {
 
 		sc.close();
 
+	}
+
+	private static boolean isjoinableLoginId(String loginId) {
+		int index = getMemberIndexByLoginId(loginId);
+
+		if (index == -1) {
+			return true;
+		}
+		
+		return false;
+	}
+
+	private static int getMemberIndexByLoginId(String loginId) {
+		int i = 0;
+		for (Member member : members) {
+//			if (member.loginId == loginId) {         <- 이건 안됨, 자바 문자열 비교 equals 검색
+			if (member.loginId.equals(loginId)) {
+				return i;
+			}
+		}
+
+		return -1;
 	}
 
 	private static int getArticleIndexById(int id) {
