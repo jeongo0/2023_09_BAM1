@@ -29,15 +29,31 @@ public class MemberController extends Controller {
 
 		switch (actionMethodName) {
 		case "join":
+			if (isLogined()) {
+				System.out.println("이미 누가 로그인 했다.");
+				return;
+			}
 			doJoin();
 			break;
 		case "login":
+			if (isLogined()) {
+				System.out.println("이미 누가 로그인 했다.");
+				return;
+			}
 			doLogin();
 			break;
 		case "logout":
+			if(isLogined == false) {
+				System.out.println("현재 로그아웃 상태");
+				return;
+			}
 			doLogout();
 			break;
 		case "whoami":
+			if(isLogined == false) {
+				System.out.println("현재 로그아웃 상태");
+				return;
+			}
 			showWhoami();
 			break;
 		default:
@@ -47,10 +63,7 @@ public class MemberController extends Controller {
 	}
 
 	private void showWhoami() {
-		if(isLogined == false) {
-			System.out.println("현재 로그아웃 상태");
-			return;
-		}
+		
 		System.out.println("== 현재 로그인 한 회원 정보 ==");
 		System.out.println("가입일 : " + loginedMember.regDate);
 		System.out.println("로그인 아이디 : " + loginedMember.loginId);
@@ -58,10 +71,7 @@ public class MemberController extends Controller {
 	}
 
 	private void doLogout() {
-		if(isLogined == false) {
-			System.out.println("현재 로그아웃 상태");
-			return;
-		}
+	
 		isLogined = false;
 		loginedMember = null; 
 		
@@ -70,10 +80,7 @@ public class MemberController extends Controller {
 	}
 
 	private void doLogin() {
-		if (isLogined()) {
-			System.out.println("이미 누가 로그인 했다.");
-			return;
-		}
+		
 		System.out.printf("로그인 아이디 : ");
 		String loginId = sc.nextLine();
 		System.out.printf("로그인 비밀번호 : ");
@@ -98,10 +105,7 @@ public class MemberController extends Controller {
 	}
 
 	public void doJoin() {
-		if (isLogined()) {
-			System.out.println("이미 누가 로그인 했다.");
-			return;
-		}
+		
 		int id = lastMemberId + 1;
 		String regDate = Util.getNow();
 		String loginId = null;
