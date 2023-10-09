@@ -29,31 +29,15 @@ public class MemberController extends Controller {
 
 		switch (actionMethodName) {
 		case "join":
-			if (isLogined()) {
-				System.out.println("이미 누가 로그인 했다.");
-				return;
-			}
 			doJoin();
 			break;
 		case "login":
-			if (isLogined()) {
-				System.out.println("이미 누가 로그인 했다.");
-				return;
-			}
 			doLogin();
 			break;
 		case "logout":
-			if(isLogined == false) {
-				System.out.println("현재 로그아웃 상태");
-				return;
-			}
 			doLogout();
 			break;
 		case "whoami":
-			if(isLogined == false) {
-				System.out.println("현재 로그아웃 상태");
-				return;
-			}
 			showWhoami();
 			break;
 		default:

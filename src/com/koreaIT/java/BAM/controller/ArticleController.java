@@ -27,10 +27,6 @@ public class ArticleController extends Controller {
 		
 		switch (actionMethodName) {
 		case "write":
-			if (isLogined() == false) {
-				System.out.println("현재 로그아웃 상태");
-				return;
-			}
 			doWrite();
 			break;
 		case "list":
@@ -40,17 +36,9 @@ public class ArticleController extends Controller {
 			showDetail();
 			break;
 		case "modify":
-			if (isLogined() == false) {
-				System.out.println("현재 로그아웃 상태");
-				return;
-			}
 			doModify();
 			break;
 		case "delete":
-			if (isLogined() == false) {
-				System.out.println("현재 로그아웃 상태");
-				return;
-			}
 			doDelete();
 			break;
 		default:
