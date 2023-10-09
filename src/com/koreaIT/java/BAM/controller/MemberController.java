@@ -13,6 +13,9 @@ public class MemberController extends Controller {
 	private Scanner sc;
 	private String actionMethodName;
 	private String command;
+	
+	boolean isLogined = false;
+	Member loginedMember = null;
 
 	int lastMemberId = 3;
 
@@ -39,29 +42,34 @@ public class MemberController extends Controller {
 	}
 
 	private void doLogin() {
-		String loginId = null;
-		String loginPw = null;
+//		if(isLogined == true) {
+//			System.out.println("이미 누가 로그인 했다.");
+//			return;
+//		}
+		
+		if(loginedMember != null) {
+			System.out.println("이미 누가 로그인 했다.");
+			return;
+		}
 		System.out.printf("로그인 아이디 : ");
-		loginId = sc.nextLine();
+		String loginId = sc.nextLine();
 		System.out.printf("로그인 비밀번호 : ");
-		loginPw = sc.nextLine();
+		String loginPw = sc.nextLine();
 
-		// 지금 입력한 id 와 일치하는 id를 가진 회원이 나한테 있는지 확인.
 		Member member = getMemberByLoginId(loginId);
 
-		if (member == null); {
+		if (member == null) {
 			System.out.println("너같은 회원은 없어");
 			return;
 		}
 		
-		System.out.println(member.loginPw);  // 찾아와서 가져다 놓은 비밀번호
-		System.out.println(loginPw);        // 내가 입력한 비밀번호
-		
-		// 지금 입력한 비밀번호랑 member에 써져있는 비밀번호 와 일치 하는지 확인
 		if (member.loginPw.equals(loginPw) == false) {
 			System.out.println("비번 틀림");
 			return;
 		}
+		
+		isLogined = true;
+		loginedMember = member;
 		
 		System.out.println("로그인 성공");
 	}
@@ -162,6 +170,7 @@ public class MemberController extends Controller {
 			if (member.loginId.equals(loginId)) {
 				return i;
 			}
+			i++;
 		}
 		return -1;
 	}
