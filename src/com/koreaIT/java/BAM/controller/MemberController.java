@@ -1,5 +1,6 @@
 package com.koreaIT.java.BAM.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,10 +13,11 @@ public class MemberController extends Controller {
 	private Scanner sc;
 	private String actionMethodName;
 	private String command;
+	
 	int lastMemberId = 0;
 
-	public MemberController(List<Member> members, Scanner sc) {
-		this.members = members;
+	public MemberController(Scanner sc) {
+		this.members = new ArrayList<Member>();
 		this.sc = sc;
 	}
 

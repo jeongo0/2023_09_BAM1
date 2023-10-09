@@ -1,23 +1,15 @@
 package com.koreaIT.java.BAM;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import com.koreaIT.java.BAM.controller.ArticleController;
 import com.koreaIT.java.BAM.controller.Controller;
 import com.koreaIT.java.BAM.controller.MemberController;
-import com.koreaIT.java.BAM.dto.Article;
-import com.koreaIT.java.BAM.dto.Member;
 
 public class App {
 
-	List<Article> articles;
-	List<Member> members;
-
 	App() {
-		articles = new ArrayList<Article>();
-		members = new ArrayList<Member>();
+
 	}
 
 	public void start() {
@@ -25,8 +17,8 @@ public class App {
 
 		Scanner sc = new Scanner(System.in);
 
-		MemberController memberController = new MemberController(members, sc);
-		ArticleController articleController = new ArticleController(articles, sc);
+		MemberController memberController = new MemberController(sc);
+		ArticleController articleController = new ArticleController( sc);
 
 		articleController.makeTestData();
 		
