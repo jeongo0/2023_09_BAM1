@@ -7,19 +7,47 @@ import java.util.Scanner;
 import com.koreaIT.java.BAM.dto.Article;
 import com.koreaIT.java.BAM.util.Util;
 
-public class ArticleController {
+public class ArticleController extends Controller {
 
 	private List<Article> articles;
 	private Scanner sc;
+	private String actionMethodName;
+	private String command;
+
+	int lastArticleId = 5;
 
 	public ArticleController(List<Article> articles, Scanner sc) {
 		this.articles = articles;
 		this.sc = sc;
 	}
 
-	int lastArticleId = 5;
+	public void doAction(String actionMethodName, String command) {
+		this.actionMethodName = actionMethodName;
+		this.command = command;
 
-	public void showList(String command) {
+		switch (actionMethodName) {
+		case "write":
+			doWrite();
+			break;
+		case "list":
+			showList();
+			break;
+		case "detail":
+			showDetail();
+			break;
+		case "modify":
+			doModify();
+			break;
+		case "delete":
+			doDelete();
+			break;
+		default:
+			System.out.println("그런 세부기능은 없어");
+			break;
+		}
+	}
+
+	public void showList() {
 		if (articles.size() == 0) {
 			System.out.println("게시글이 없습니다");
 			return;
@@ -71,7 +99,7 @@ public class ArticleController {
 
 	}
 
-	public void showDetail(String command) {
+	public void showDetail() {
 		String[] commandDiv = command.split(" ");
 
 		int id = Integer.parseInt(commandDiv[2]);
@@ -94,7 +122,7 @@ public class ArticleController {
 
 	}
 
-	public void doModify(String command) {
+	public void doModify() {
 
 		String[] commandDiv = command.split(" ");
 
@@ -119,7 +147,7 @@ public class ArticleController {
 
 	}
 
-	public void doDelete(String command) {
+	public void doDelete() {
 		String[] commandDiv = command.split(" ");
 
 		int id = Integer.parseInt(commandDiv[2]);

@@ -6,17 +6,32 @@ import java.util.Scanner;
 import com.koreaIT.java.BAM.dto.Member;
 import com.koreaIT.java.BAM.util.Util;
 
-public class MemberController {
-	
+public class MemberController extends Controller {
+
 	private List<Member> members;
 	private Scanner sc;
-	
+	private String actionMethodName;
+	private String command;
+	int lastMemberId = 0;
+
 	public MemberController(List<Member> members, Scanner sc) {
 		this.members = members;
 		this.sc = sc;
 	}
-	
-	int lastMemberId = 0;
+
+	public void doAction(String actionMethodName, String command) {
+		this.actionMethodName = actionMethodName;
+		this.command = command;
+
+		switch (actionMethodName) {
+		case "join":
+			doJoin();
+			break;
+		default:
+			System.out.println("그런 세부기능은 없어");
+			break;
+		}
+	}
 
 	public void doJoin() {
 		int id = lastMemberId + 1;
@@ -25,7 +40,7 @@ public class MemberController {
 		String loginPw = null;
 		String loginPwConfirm = null;
 		String name = null;
-		
+
 		while (true) {
 			System.out.printf("로그인 아이디 : ");
 			loginId = sc.nextLine();
@@ -41,39 +56,39 @@ public class MemberController {
 
 			break;
 		}
-		
+
 		while (true) {
 			System.out.printf("로그인 비밀번호 : ");
 			loginPw = sc.nextLine();
-			
+
 			if (loginPw.length() == 0) {
 				System.out.println("비밀번호 입력해라");
 				continue;
 			}
-			
+
 			while (true) {
 				System.out.printf("로그인 비밀번호 확인: ");
 				loginPwConfirm = sc.nextLine();
-				
+
 				if (loginPwConfirm.length() == 0) {
 					System.out.println("비밀번호 입력해라");
 					continue;
 				}
-				break;						
+				break;
 			}
-			
+
 			if (loginPw.equals(loginPwConfirm) == false) {
 				System.out.println("비밀번호 확인해");
 				continue;
 			}
 			break;
-			
+
 		}
-		
-		while(true) {
+
+		while (true) {
 			System.out.printf("이름 : ");
 			name = sc.nextLine();
-			
+
 			if (name.length() == 0) {
 				System.out.println("이름 입력해라");
 				continue;
@@ -87,7 +102,7 @@ public class MemberController {
 		System.out.printf("%d번 회원이 가입되었습니다.\n", id);
 		lastMemberId++;
 	}
-	
+
 	private boolean isjoinableLoginId(String loginId) {
 		int index = getMemberIndexByLoginId(loginId);
 
@@ -108,5 +123,5 @@ public class MemberController {
 		}
 		return -1;
 	}
-	
+
 }
