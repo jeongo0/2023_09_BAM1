@@ -21,6 +21,7 @@ public class App {
 		ArticleController articleController = new ArticleController( sc);
 
 		articleController.makeTestData();
+		memberController.makeTestData();
 		
 		Controller controller;
 		
@@ -62,7 +63,7 @@ public class App {
 				continue;
 			}
 			
-			controller.doAction(actionMethodName,command);
+			controller.doAction(actionMethodName, command);
 
 		}
 

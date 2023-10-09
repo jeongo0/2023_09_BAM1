@@ -1,7 +1,11 @@
 package com.koreaIT.java.BAM.controller;
 
-public class Controller {
-	public void doAction(String actionMethodName, String command) { // 선언부, 추상 메서드
+import com.koreaIT.java.BAM.util.Util;
+
+public abstract class Controller {
+	public abstract void doAction(String actionMethodName, String command);
+
+	public void makeTestData() {
 	
 	}
 }
