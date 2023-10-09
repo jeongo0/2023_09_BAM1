@@ -35,19 +35,43 @@ public class MemberController extends Controller {
 		case "login":
 			doLogin();
 			break;
+		case "logout":
+			doLogout();
+			break;
+		case "whoami":
+			showWhoami();
+			break;
 		default:
 			System.out.println("그런 세부기능은 없어");
 			break;
 		}
 	}
 
-	private void doLogin() {
-//		if(isLogined == true) {
-//			System.out.println("이미 누가 로그인 했다.");
-//			return;
-//		}
+	private void showWhoami() {
+		if(isLogined == false) {
+			System.out.println("현재 로그아웃 상태");
+			return;
+		}
+		System.out.println("== 현재 로그인 한 회원 정보 ==");
+		System.out.println("가입일 : " + loginedMember.regDate);
+		System.out.println("로그인 아이디 : " + loginedMember.loginId);
+		System.out.println("이름 : " + loginedMember.name);
+	}
+
+	private void doLogout() {
+		if(isLogined == false) {
+			System.out.println("현재 로그아웃 상태");
+			return;
+		}
+		isLogined = false;
+		loginedMember = null;  // 다시 돌려놨고, (2)
 		
-		if(loginedMember != null) {
+		System.out.println(" 로그아웃 ");
+		
+	}
+
+	private void doLogin() {
+		if (isLogined()) {
 			System.out.println("이미 누가 로그인 했다.");
 			return;
 		}
@@ -69,12 +93,16 @@ public class MemberController extends Controller {
 		}
 		
 		isLogined = true;
-		loginedMember = member;
+		loginedMember = member;   // 덮어 씌웠고, (1)
 		
 		System.out.println("로그인 성공");
 	}
 
 	public void doJoin() {
+		if (isLogined()) {
+			System.out.println("이미 누가 로그인 했다.");
+			return;
+		}
 		int id = lastMemberId + 1;
 		String regDate = Util.getNow();
 		String loginId = null;
@@ -142,6 +170,10 @@ public class MemberController extends Controller {
 
 		System.out.printf("%d번 회원이 가입되었습니다.\n", id);
 		lastMemberId++;
+	}
+	
+	public boolean isLogined() {
+		return loginedMember != null;
 	}
 
 	private Member getMemberByLoginId(String loginId) {
