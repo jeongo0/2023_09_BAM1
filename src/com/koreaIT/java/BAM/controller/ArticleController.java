@@ -24,9 +24,13 @@ public class ArticleController extends Controller {
 	public void doAction(String actionMethodName, String command) {
 		this.actionMethodName = actionMethodName;
 		this.command = command;
-
+		
 		switch (actionMethodName) {
 		case "write":
+			if (isLogined() == false) {
+				System.out.println("현재 로그아웃 상태");
+				return; // break; 로 변환해도 상관 없다. 끝나는건 똑같기 때문이다.
+			}
 			doWrite();
 			break;
 		case "list":
@@ -84,6 +88,7 @@ public class ArticleController extends Controller {
 	}
 
 	public void doWrite() {
+		
 		int id = lastArticleId + 1;
 		String regDate = Util.getNow();
 		System.out.printf("제목 : ");

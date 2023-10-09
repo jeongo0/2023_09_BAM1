@@ -15,7 +15,6 @@ public class MemberController extends Controller {
 	private String command;
 	
 	boolean isLogined = false;
-	Member loginedMember = null;
 
 	int lastMemberId = 3;
 
@@ -64,7 +63,7 @@ public class MemberController extends Controller {
 			return;
 		}
 		isLogined = false;
-		loginedMember = null;  // 다시 돌려놨고, (2)
+		loginedMember = null; 
 		
 		System.out.println(" 로그아웃 ");
 		
@@ -93,7 +92,7 @@ public class MemberController extends Controller {
 		}
 		
 		isLogined = true;
-		loginedMember = member;   // 덮어 씌웠고, (1)
+		loginedMember = member; 
 		
 		System.out.println("로그인 성공");
 	}
@@ -172,10 +171,6 @@ public class MemberController extends Controller {
 		lastMemberId++;
 	}
 	
-	public boolean isLogined() {
-		return loginedMember != null;
-	}
-
 	private Member getMemberByLoginId(String loginId) {
 		int index = getMemberIndexByLoginId(loginId);
 
